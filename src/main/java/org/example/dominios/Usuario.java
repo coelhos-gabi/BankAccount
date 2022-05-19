@@ -14,7 +14,7 @@ public class Usuario {
         return login;
     }
 
-    public boolean autenticar(){
-
-    }
+//    public boolean autenticar(){
+//
+//    }
 }

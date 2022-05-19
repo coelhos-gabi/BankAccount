@@ -1,27 +1,37 @@
 package org.example.telas;
 
+import org.example.dominios.Cliente;
 import org.example.dominios.Conta;
 import org.example.dominios.TipoConta;
+import org.example.factory.ContaFactory;
 
 import java.util.Objects;
 import java.util.Scanner;
 
 public class CriarConta {
 
-    public void executar(Scanner scanner){
+    public static void executar(Scanner scanner){
+
+        Cliente cliente = CriarCliente.executar(scanner);
         System.out.println("Informe a Agência");
         String agencia = scanner.next();
+
         System.out.println("Informe o tipo de conta");
         StringBuilder builder = new StringBuilder();
+
         for(TipoConta tipoConta:TipoConta.values()){
-            builder.append(String.format("%s - %s", tipoConta.getCode(), tipoConta.getLabel()));
+            builder.append(String.format("%s - %s %n", tipoConta.getCode(), tipoConta.getLabel()));
         }
+        System.out.println(builder);
         String opcao = scanner.next();
         TipoConta tipoConta = TipoConta.valueOfCode(opcao);
         if(Objects.isNull(tipoConta)){
             System.out.println("Não foi informado o tipo da conta");
         }else{
-            Conta conta = Conta.criarConta()
+            Conta minhaConta = ContaFactory.createConta(null, tipoConta, agencia);
+            System.out.printf("Cliente %s. %n \t Conta criada com sucesso " +
+                    "%n \t Agência: %s %n \t Conta: %s %n", cliente.getNome(),
+                    minhaConta.getAgencia(), minhaConta.getNumeroConta());
         }
     }
 }
